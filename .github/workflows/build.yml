@@ -4,9 +4,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    container: swift:6.0.0
+    runs-on: windows-latest
+  #  runs-on: ubuntu-22.04
+  #  container: swift:6.0.0
     steps:
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-6.0.3-release
+          tag: 6.0.3-RELEASE
       - uses: actions/checkout@v4
       - name: Run script
         run: swift run
