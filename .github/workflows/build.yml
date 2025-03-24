@@ -3,15 +3,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-linux:
+    runs-on: ubuntu-22.04
+    container: swift:6.0.3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: swift run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-artifact
+          path: linux.json
+  build-windows:
     runs-on: windows-latest
-  #  runs-on: ubuntu-22.04
-  #  container: swift:6.0.0
     steps:
       - uses: compnerd/gha-setup-swift@main
         with:
           branch: swift-6.0.3-release
           tag: 6.0.3-RELEASE
       - uses: actions/checkout@v4
-      - name: Run script
+      - name: Build
         run: swift run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifact
+          path: windows.json
