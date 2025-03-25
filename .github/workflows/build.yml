@@ -43,6 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Get next packages
+        id: get-next-packages
         run: swift run GetNextPackages
   build-repos:
     needs: get-next-packages
