@@ -1,19 +1,19 @@
-name: build
-on:
-  workflow_dispatch:
+#name: build
+#on:
+#  workflow_dispatch:
 
-jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-    container: swiftlang/swift:nightly-6.1-jammy
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build
-        run: swift run
-      - uses: actions/upload-artifact@v4
-        with:
-          name: linux-artifact
-          path: linux.json
+#jobs:
+#  build-linux:
+#    runs-on: ubuntu-latest
+#    container: swiftlang/swift:nightly-6.1-jammy
+#    steps:
+#      - uses: actions/checkout@v4
+ #     - name: Build
+ #       run: swift run
+ #     - uses: actions/upload-artifact@v4
+ #       with:
+ #         name: linux-artifact
+ #         path: linux.json
 #  build-windows:
 #    runs-on: windows-latest
 #    steps:
@@ -28,3 +28,30 @@ jobs:
 #        with:
 #          name: windows-artifact
 #          path: windows.json
+
+name: build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  get-next-packages:
+    runs-on: ubuntu-latest
+    container: swiftlang/swift:nightly-6.1-jammy
+    outputs:
+      repo-list: ${{ steps.generate-list.outputs.repo-list }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get next packages
+        run: swift run GetNextPackages
+  build-repos:
+    needs: get-next-packages
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: ${{ fromJSON(needs.determine-repos.outputs.repo-list) }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Echo repo
+        run: echo "${{ matrix.repo }}"
