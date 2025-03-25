@@ -45,12 +45,13 @@ jobs:
       - name: Get next packages
         id: get-next-packages
         run: swift run GetNextPackages
-  build-repos:
+  build-repo:
     needs: get-next-packages
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
