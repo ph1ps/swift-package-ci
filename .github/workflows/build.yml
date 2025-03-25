@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     container: swiftlang/swift:nightly-6.1-jammy
     outputs:
-      repo-list: ${{ steps.generate-list.outputs.repo-list }}
+      packages: ${{ steps.get-next-packages.outputs.packages }}
     steps:
       - uses: actions/checkout@v4
       - name: Get next packages
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ${{ fromJSON(needs.determine-repos.outputs.repo-list) }}
+        repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
