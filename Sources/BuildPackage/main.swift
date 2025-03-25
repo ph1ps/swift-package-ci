@@ -1,32 +1,32 @@
 import Subprocess
-
+/*
 let packages = [
   "pointfreeco/combine-schedulers",
   "pointfreeco/sharing-grdb",
   "pointfreeco/swift-case-paths",
   "pointfreeco/swift-clocks",
-  "pointfreeco/swift-concurrency-extras",
-  "pointfreeco/swift-custom-dump",
-  "pointfreeco/swift-dependencies",
-  "pointfreeco/swift-gen",
-  "pointfreeco/swift-html",
-  "pointfreeco/swift-html-vapor",
-  "pointfreeco/swift-identified-collections",
-  "pointfreeco/swift-issue-reporting",
-  "pointfreeco/swift-macro-testing",
-  "pointfreeco/swift-navigation",
-  "pointfreeco/swift-nonempty",
-  "pointfreeco/swift-overture",
-  "pointfreeco/swift-parsing",
-  "pointfreeco/swift-perception",
-  "pointfreeco/swift-prelude",
-  "pointfreeco/swift-sharing",
-  "pointfreeco/swift-snapshot-testing",
-  "pointfreeco/swift-tagged",
-  "pointfreeco/swift-url-routing",
-  "pointfreeco/swift-validated",
-  "pointfreeco/swift-web",
-  "pointfreeco/swiftui-navigation"
+ //"pointfreeco/swift-concurrency-extras",
+ //"pointfreeco/swift-custom-dump",
+ //"pointfreeco/swift-dependencies",
+ //"pointfreeco/swift-gen",
+ //"pointfreeco/swift-html",
+ //"pointfreeco/swift-html-vapor",
+ //"pointfreeco/swift-identified-collections",
+ //"pointfreeco/swift-issue-reporting",
+ //"pointfreeco/swift-macro-testing",
+ //"pointfreeco/swift-navigation",
+ //"pointfreeco/swift-nonempty",
+ //"pointfreeco/swift-overture",
+ //"pointfreeco/swift-parsing",
+ //"pointfreeco/swift-perception",
+ //"pointfreeco/swift-prelude",
+ //"pointfreeco/swift-sharing",
+ //"pointfreeco/swift-snapshot-testing",
+ //"pointfreeco/swift-tagged",
+ //"pointfreeco/swift-url-routing",
+ //"pointfreeco/swift-validated",
+ //"pointfreeco/swift-web",
+ //"pointfreeco/swiftui-navigation"
 ]
 
 struct BuildResult {
@@ -104,3 +104,4 @@ let duration = await clock.measure {
 }
 
 print("done in", duration)
+*/
