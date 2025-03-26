@@ -16,6 +16,7 @@ jobs:
         run: swift run GetNextPackages
   build-repo:
     needs: get-next-packages
+    continue-on-error: true
     strategy:
       matrix:
         repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
@@ -24,9 +25,11 @@ jobs:
           - sdk: wasm
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-wasm:latest
+            build: swift build --swift-sdk 6.0.3-RELEASE-wasm32-unknown-wasi
           - sdk: musl
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-musl:latest
+            build: swift build --swift-sdk swift-6.0.3-RELEASE_static-linux-0.0.1
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     steps:
@@ -36,4 +39,4 @@ jobs:
           repository: ${{ matrix.repo }}
           fetch-depth: 1
       - name: Build
-        run: swift build
+        run: ${{ matrix.build }}
