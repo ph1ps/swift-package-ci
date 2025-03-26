@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
-        sdk: [wasm, musl]
+        sdk: [wasm, musl, android]
         include:
           - sdk: wasm
             os: ubuntu-latest
@@ -30,6 +30,10 @@ jobs:
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-musl:latest
             build: swift build --swift-sdk swift-6.0.3-RELEASE_static-linux-0.0.1
+          - sdk: android
+            os: ubuntu-latest
+            container: docker://ghcr.io/ph1ps/swift-android:latest
+            build: swift build --swift-sdk swift-6.0.3-RELEASE-android-24-0.1
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     steps:
