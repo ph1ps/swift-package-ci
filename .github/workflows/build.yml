@@ -49,12 +49,6 @@ jobs:
           branch: swift-6.0.3-release
           tag: 6.0.3-RELEASE
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: |
-            .build
-            .swiftpm
-          key: ${{ hashFiles('**/Packages.resolved') }}
       - uses: actions/download-artifact@v4
         with:
           name: selected-packages
