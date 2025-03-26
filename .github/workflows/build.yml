@@ -1,4 +1,4 @@
-name: Build 10 random packages
+name: Build 5 random packages
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
-        sdk: [wasm, musl, android]
+        sdk: [wasm, musl, android, windows]
         include:
           - sdk: wasm
             os: ubuntu-latest
@@ -34,9 +34,17 @@ jobs:
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-android:latest
             build: swift build --swift-sdk swift-6.0.3-RELEASE-android-24-0.1
+          - sdk: windows
+            os: windows-latest
+            build: swift build
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     steps:
+      - uses: compnerd/gha-setup-swift@main
+        if: matrix.os == windows-latest
+        with:
+          branch: swift-6.0.3-release
+          tag: 6.0.3-RELEASE
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
