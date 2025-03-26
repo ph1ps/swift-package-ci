@@ -41,7 +41,7 @@ jobs:
     container: ${{ matrix.container }}
     steps:
       - uses: compnerd/gha-setup-swift@main
-        if: matrix.os == windows-latest
+        if: matrix.os == 'windows-latest'
         with:
           branch: swift-6.0.3-release
           tag: 6.0.3-RELEASE
