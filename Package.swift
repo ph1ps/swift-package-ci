@@ -14,9 +14,6 @@ let package = Package(
   targets: [
     .executableTarget(
       name: "GetNextPackages",
-      dependencies: [
-        .product(name: "Subprocess", package: "Subprocess")
-      ],
       resources: [
         .process("packages.json")
       ]

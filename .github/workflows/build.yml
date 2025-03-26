@@ -14,26 +14,29 @@ jobs:
       - name: Get next packages
         id: get-next-packages
         run: swift run GetNextPackages
+      - uses: actions/upload-artifact@v4
+        with:
+          name: selected-packages
+          path: selected-packages.json
   build-repo:
     needs: get-next-packages
     continue-on-error: true
     strategy:
       matrix:
-        repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
         sdk: [wasm, musl, android, windows]
         include:
           - sdk: wasm
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-wasm:latest
-            build: swift build --swift-sdk 6.0.3-RELEASE-wasm32-unknown-wasi
+            build: SWIFT_SDK=6.0.3-RELEASE-wasm32-unknown-wasi swift run BuildPackage
           - sdk: musl
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-musl:latest
-            build: swift build --swift-sdk swift-6.0.3-RELEASE_static-linux-0.0.1
+            build: SWIFT_SDK=swift-6.0.3-RELEASE_static-linux-0.0.1 swift run BuildPackage
           - sdk: android
             os: ubuntu-latest
             container: docker://ghcr.io/ph1ps/swift-android:latest
-            build: swift build --swift-sdk swift-6.0.3-RELEASE-android-24-0.1
+            build: SWIFT_SDK=swift-6.0.3-RELEASE-android-24-0.1 swift run BuildPackage
           - sdk: windows
             os: windows-latest
             build: swift build
@@ -45,10 +48,16 @@ jobs:
         with:
           branch: swift-6.0.3-release
           tag: 6.0.3-RELEASE
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
-          repository: ${{ matrix.repo }}
-          fetch-depth: 1
+          path: |
+            .build
+            .swiftpm
+          key: ${{ hashFiles('**/Packages.resolved') }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: selected-packages
+          path: selected-packages.json
       - name: Build
         run: ${{ matrix.build }}
