@@ -51,9 +51,21 @@ jobs:
       matrix:
         repo: ${{ fromJSON(needs.get-next-packages.outputs.packages) }}
         os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            container_image: swift:6.0.3
     runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container_image }}
     steps:
+      - uses: compnerd/gha-setup-swift@main
+        if: matrix.os == 'windows-latest'
+        with:
+          branch: swift-6.0.3-release
+          tag: 6.0.3-RELEASE
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          fetch-depth: 1
       - name: Echo repo
         run: echo "${{ matrix.repo }}"
