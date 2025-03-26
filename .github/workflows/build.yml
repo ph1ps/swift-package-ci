@@ -67,5 +67,5 @@ jobs:
         with:
           repository: ${{ matrix.repo }}
           fetch-depth: 1
-      - name: Echo repo
-        run: echo "${{ matrix.repo }}"
+      - name: Build
+        run: swift build
