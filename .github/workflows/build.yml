@@ -1,4 +1,4 @@
-name: Build 5 random packages
+name: Build random packages
 
 on:
   workflow_dispatch:
